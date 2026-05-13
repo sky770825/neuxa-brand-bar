@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>夜幕酒吧 | Nightfall Bar · 威士忌雞尾酒</title>
+<style>
+  :root {
+    --bg-deep: #0d1f17;
+    --bg-dark: #111;
+    --gold: #c9a84c;
+    --gold-light: #e0c878;
+    --text: #e0ddd5;
+    --text-muted: #a09888;
+    --card-bg: #142820;
+    --border: #1e3328;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Georgia', 'Noto Serif TC', 'Times New Roman', serif;
+    background: var(--bg-dark);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(13,31,23,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+  }
+  .nav-logo {
+    font-size: 1.6rem; font-weight: bold; letter-spacing: 3px;
+    color: var(--gold); text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 0.9rem; letter-spacing: 2px;
+    transition: color 0.3s; text-transform: uppercase;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.65), rgba(13,31,23,0.85)),
+                url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1200&q=80') center/cover no-repeat;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .hero-content { max-width: 700px; padding: 2rem; }
+  .hero h1 {
+    font-size: 4rem; letter-spacing: 8px;
+    color: var(--gold); margin-bottom: 1rem;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+  }
+  .hero .subtitle {
+    font-size: 1.3rem; color: var(--text-muted);
+    letter-spacing: 4px; margin-bottom: 2rem;
+  }
+  .hero .tagline {
+    font-size: 1.1rem; color: var(--gold-light);
+    letter-spacing: 3px; font-style: italic;
+  }
+  .btn-gold {
+    display: inline-block; margin-top: 2rem;
+    padding: 0.9rem 2.5rem;
+    border: 2px solid var(--gold); color: var(--gold);
+    text-decoration: none; letter-spacing: 3px;
+    font-size: 0.9rem; transition: all 0.3s;
+  }
+  .btn-gold:hover { background: var(--gold); color: var(--bg-deep); }
+  .marquee-wrap {
+    background: var(--bg-deep); padding: 1.2rem 0;
+    border-top: 1px solid rgba(201,168,76,0.3);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    overflow: hidden;
+  }
+  .marquee {
+    display: flex; gap: 3rem;
+    animation: scroll 25s linear infinite;
+    white-space: nowrap;
+    font-size: 0.95rem; letter-spacing: 4px;
+    color: var(--gold-light);
+  }
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .marquee span { opacity: 0.7; }
+  .marquee .sep { color: var(--gold); margin: 0 0.5rem; }
+  section { padding: 5rem 2rem; }
+  .section-title {
+    text-align: center; font-size: 2.2rem;
+    letter-spacing: 6px; color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .section-subtitle {
+    text-align: center; color: var(--text-muted);
+    letter-spacing: 3px; margin-bottom: 3rem; font-size: 0.85rem;
+  }
+  #features { background: var(--bg-deep); }
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem; max-width: 1100px; margin: 0 auto;
+  }
+  .feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2.5rem 2rem; text-align: center;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .feature-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+  .feature-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .feature-card h3 {
+    color: var(--gold); letter-spacing: 3px;
+    margin-bottom: 0.8rem; font-size: 1.1rem;
+  }
+  .feature-card p { color: var(--text-muted); font-size: 0.9rem; }
+  .feature-img {
+    width: 100%; height: 160px; object-fit: cover;
+    margin-bottom: 1.2rem; border-radius: 2px;
+  }
+  #menu { background: var(--bg-dark); }
+  .menu-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; max-width: 1000px; margin: 0 auto;
+  }
+  .menu-col h3 {
+    color: var(--gold); letter-spacing: 4px;
+    text-align: center; margin-bottom: 2rem; font-size: 1.3rem;
+  }
+  .menu-item {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 0.8rem 0; border-bottom: 1px dotted var(--border);
+  }
+  .menu-item .name { letter-spacing: 2px; }
+  .menu-item .price { color: var(--gold); letter-spacing: 1px; margin-left: 1rem; white-space: nowrap; }
+  .menu-item .desc { color: var(--text-muted); font-size: 0.8rem; display: block; margin-top: 0.2rem; }
+  #locations { background: var(--bg-deep); }
+  .locations-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem; max-width: 1000px; margin: 0 auto;
+  }
+  .location-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    padding: 2rem; text-align: center;
+  }
+  .location-card h3 { color: var(--gold); letter-spacing: 3px; margin-bottom: 0.8rem; }
+  .location-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.8; }
+  footer {
+    background: #0a0a0a; text-align: center;
+    padding: 3rem 2rem; border-top: 1px solid var(--border);
+  }
+  footer .logo { color: var(--gold); font-size: 1.5rem; letter-spacing: 6px; margin-bottom: 1rem; }
+  footer p { color: var(--text-muted); font-size: 0.8rem; letter-spacing: 2px; }
+  footer .hours { margin-top: 1rem; color: var(--gold-light); font-size: 0.85rem; }
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 2.5rem; letter-spacing: 4px; }
+    .nav-links { gap: 1rem; }
+    .menu-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .features-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="nav-logo">夜幕</a>
+  <ul class="nav-links">
+    <li><a href="#features">特色</a></li>
+    <li><a href="#menu">酒單</a></li>
+    <li><a href="#locations">分店</a></li>
+  </ul>
+</nav>
+<section class="hero">
+  <div class="hero-content">
+    <h1>夜 幕 酒 吧</h1>
+    <p class="subtitle">N I G H T F A L L · B A R</p>
+    <p class="tagline">— 精選威士忌 · 手工雞尾酒 · 爵士繚繞 —</p>
+    <a href="#menu" class="btn-gold">探 索 酒 單</a>
+  </div>
+</section>
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>✦ 每週五爵士之夜</span><span class="sep">|</span>
+    <span>✦ 超過 200 款精選威士忌</span><span class="sep">|</span>
+    <span>✦ 手工調製雞尾酒</span><span class="sep">|</span>
+    <span>✦ 深夜營業至凌晨二時</span><span class="sep">|</span>
+    <span>✦ 會員專屬品酒活動</span><span class="sep">|</span>
+    <span>✦ Happy Hour 17:00-19:00</span><span class="sep">|</span>
+    <span>✦ 每週五爵士之夜</span><span class="sep">|</span>
+    <span>✦ 超過 200 款精選威士忌</span><span class="sep">|</span>
+    <span>✦ 手工調製雞尾酒</span><span class="sep">|</span>
+    <span>✦ 深夜營業至凌晨二時</span><span class="sep">|</span>
+    <span>✦ 會員專屬品酒活動</span><span class="sep">|</span>
+    <span>✦ Happy Hour 17:00-19:00</span>
+  </div>
+</div>
+<section id="features">
+  <h2 class="section-title">品 · 味 · 體 · 驗</h2>
+  <p class="section-subtitle">E X P E R I E N C E</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <img class="feature-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=80" alt="調酒師">
+      <h3>專業調酒師</h3>
+      <p>擁有十年以上經驗的資深調酒師，每一杯雞尾酒都是匠心之作，為您量身調製專屬風味。</p>
+    </div>
+    <div class="feature-card">
+      <img class="feature-img" src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=600&q=80" alt="威士忌">
+      <h3>精選威士忌</h3>
+      <p>收藏來自蘇格蘭、日本、台灣等超過 200 款單一麥芽與調和威士忌，滿足行家味蕾。</p>
+    </div>
+    <div class="feature-card">
+      <img class="feature-img" src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=600&q=80" alt="氛圍">
+      <h3>沉靜氛圍</h3>
+      <p>深墨綠絨布沙發、昏黃燈光與黑膠唱盤，營造出宛如回到禁酒令時代的秘密酒吧氛圍。</p>
+    </div>
+    <div class="feature-card">
+      <img class="feature-img" src="https://images.unsplash.com/photo-1415201364774-f74f0bb35f9f?w=600&q=80" alt="爵士樂">
+      <h3>現場爵士</h3>
+      <p>每週五、六晚間 21:00-23:30，現場爵士三重奏演出，讓音樂與美酒交織出完美夜晚。</p>
+    </div>
+  </div>
+</section>
+<section id="menu">
+  <h2 class="section-title">酒 · 單</h2>
+  <p class="section-subtitle">M E N U</p>
+  <div class="menu-grid">
+    <div class="menu-col">
+      <h3>威士忌精選</h3>
+      <div class="menu-item"><div><span class="name">山崎 12 年</span><span class="desc">日本單一麥芽 · 蜂蜜果香</span></div><span class="price">NT$680</span></div>
+      <div class="menu-item"><div><span class="name">麥卡倫 18 年</span><span class="desc">雪莉桶 · 濃郁果乾</span></div><span class="price">NT$1,280</span></div>
+      <div class="menu-item"><div><span class="name">噶瑪蘭經典獨奏</span><span class="desc">台灣之光 · 熱帶果香</span></div><span class="price">NT$580</span></div>
+      <div class="menu-item"><div><span class="name">Lagavulin 16 年</span><span class="desc">艾雷島泥煤 · 煙燻海洋</span></div><span class="price">NT$780</span></div>
+      <div class="menu-item"><div><span class="name">響 21 年</span><span class="desc">調和工藝極致 · 花香優雅</span></div><span class="price">NT$2,200</span></div>
+      <div class="menu-item"><div><span class="name">Ardbeg 10 年</span><span class="desc">重泥煤代表 · 煙燻強勁</span></div><span class="price">NT$620</span></div>
+    </div>
+    <div class="menu-col">
+      <h3>手工雞尾酒</h3>
+      <div class="menu-item"><div><span class="name">夜幕 Old Fashioned</span><span class="desc">波本 · 自製苦精 · 橙皮 · 黑櫻桃</span></div><span class="price">NT$420</span></div>
+      <div class="menu-item"><div><span class="name">煙燻曼哈頓</span><span class="desc">裸麥威士忌 · 甜香艾酒 · 櫻桃木煙燻</span></div><span class="price">NT$450</span></div>
+      <div class="menu-item"><div><span class="name">威士忌酸</span><span class="desc">波本 · 新鮮檸檬汁 · 蛋白 · 紅酒漂浮</span></div><span class="price">NT$380</span></div>
+      <div class="menu-item"><div><span class="name">Penicillin</span><span class="desc">調和蘇格蘭 · 泥煤 · 蜂蜜薑汁 · 檸檬</span></div><span class="price">NT$420</span></div>
+      <div class="menu-item"><div><span class="name">抹茶威士忌沙瓦</span><span class="desc">日本威士忌 · 抹茶 · 柚子 · 氣泡</span></div><span class="price">NT$400</span></div>
+      <div class="menu-item"><div><span class="name">經典 Martini</span><span class="desc">琴酒或伏特加 · 乾香艾酒 · 橄欖</span></div><span class="price">NT$380</span></div>
+    </div>
+  </div>
+</section>
+<section id="locations">
+  <h2 class="section-title">分 · 店</h2>
+  <p class="section-subtitle">L O C A T I O N S</p>
+  <div class="locations-grid">
+    <div class="location-card">
+      <h3>信義旗艦店</h3>
+      <p>台北市信義區松壽路 18 號 B1<br>捷運市政府站 步行 8 分鐘<br>營業時間：17:00 - 02:00<br>02-2722-8855</p>
+    </div>
+    <div class="location-card">
+      <h3>大安隱寓</h3>
+      <p>台北市大安區四維路 76 巷 9 號<br>捷運大安站 步行 5 分鐘<br>營業時間：18:00 - 01:00<br>02-2708-3344</p>
+    </div>
+    <div class="location-card">
+      <h3>台中爵士館</h3>
+      <p>台中市西區精誠路 122 號<br>近勤美誠品綠園道<br>營業時間：18:00 - 01:00<br>04-2321-6677</p>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="logo">夜 幕 酒 吧</div>
+  <p>N I G H T F A L L · B A R · S I N C E 2 0 1 8</p>
+  <p style="margin-top:0.5rem;">精選威士忌 · 手工雞尾酒 · 爵士音樂</p>
+  <p class="hours">每日營業 17:00 - 02:00 | Happy Hour 17:00 - 19:00</p>
+  <p style="margin-top:1.5rem; opacity:0.5;">&copy; 2024 夜幕酒吧 Nightfall Bar. All rights reserved.</p>
+</footer>
+</body>
+</html>
